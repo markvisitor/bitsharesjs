@@ -5,6 +5,10 @@
     "env": {
         "cjs": {
             "plugins": ["add-module-exports"]
+        },
+        "debug": {
+            "sourceMaps": "inline",
+            "retainLines": true
         }
     }
 }

@@ -1,16 +1,16 @@
 import {Apis} from "bitsharesjs-ws";
 import {ChainStore, FetchChain, PrivateKey, TransactionHelper, Aes, TransactionBuilder} from "../lib";
 
-var witness_node = "wss://node.testnet.bitshares.eu"
+var witness_node = "ws://192.168.30.100:28080"
 var nobroadcast = false
-var amount_to_send = 10000
+var amount_to_send = 100000
 var asset_to_send = "TEST"
-var from_account = "bob"
-var to_account = "alice"
+var from_account = "maker9999test"
+var to_account = "taker9999test"
 var memo_text = "Your memo goes in here.."
 
-let pKeyActive = PrivateKey.fromWif("5KBuq5WmHvgePmB7w3onYsqLM8ESomM2Ae7SigYuuwg8MDHW7NN");  // Replace with your own Active Private Key
-let pKeyMemo = PrivateKey.fromWif("5KBuq5WmHvgePmB7w3onYsqLM8ESomM2Ae7SigYuuwg8MDHW7NN");  // Replace with your own Memo Private Key
+let pKeyActive = PrivateKey.fromWif("5J1Mi6R986wyVoPhqZ4YF8tEdjnsLFBs4HAszgb3ysdCrTfjwux");  // Replace with your own Active Private Key
+let pKeyMemo = PrivateKey.fromWif("5HyHT4sVxEhDFv4CG7sQ5QZ6Wz8scQq1ekXv2bKj1CsNH93RJgi");  // Replace with your own Memo Private Key
 
 Apis.instance(witness_node, true).init_promise.then(res => {
    console.log("connected to:", res[0].network);
@@ -72,7 +72,11 @@ Apis.instance(witness_node, true).init_promise.then(res => {
                 tr.set_required_fees().then(() => {
                     tr.add_signer(pKeyActive, pKeyActive.toPublicKey().toPublicKeyString());
                     console.log("serialized transaction:", tr.serialize());
-                    tr.broadcast();
+                    tr.broadcast(function(res){
+                        console.log('callback:' + JSON.stringify(res))
+                    }).then(res => {
+                        console.log('transation: '+ JSON.stringify(res));
+                    });
                 })
             });
     });

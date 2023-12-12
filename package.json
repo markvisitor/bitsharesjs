@@ -15,12 +15,12 @@
         "test:watch": "yarn test -- --watch",
         "clean": "rimraf dist es && rimraf build/*",
         "prebuild": "yarn run clean",
-        "build": "cross-env BABEL_ENV=cjs babel lib -d dist",
+        "build": "cross-env BABEL_ENV=cjs babel lib --ignore bitsharesjs-ws -d dist ",
         "webpack": "webpack --config webpack.config.js",
-        "build-es": "cross-env BABEL_ENV=es babel lib -d es",
+        "build-es": "cross-env BABEL_ENV=es babel lib --ignore bitsharesjs-ws -d es",
         "postbuild": "yarn run browserify && yarn run build-es && yarn run webpack",
         "build:watch": "babel lib -d dist --watch",
-        "browserify": "cross-env NODE_ENV=production browserify --full-paths false dist/browser.js --standalone bitshares_js -o build/bitsharesjs.js -d",
+        "browserify": "cross-env NODE_ENV=production browserify --full-paths false --ignore bitsharesjs-ws  dist/browser.js --standalone bitshares_js -o build/bitsharesjs.js -d",
         "postbrowserify": "cross-env NODE_ENV=production minify build/bitsharesjs.js --mangle --outFile build/bitsharesjs.min.js",
         "precommit": "pretty-quick --staged && yarn run test",
         "doc": "esdoc -c esdoc.json",
@@ -58,7 +58,7 @@
     "jsnext:main": "./es/index.js",
     "dependencies": {
         "bigi": "^1.4.2",
-        "bitsharesjs-ws": "^6.0.0",
+        "bitsharesjs-ws": "file:bitsharesjs-ws",
         "bs58": "^4.0.1",
         "bytebuffer": "^5.0.1",
         "create-hash": "^1.2.0",
@@ -68,8 +68,10 @@
         "ecurve": "^1.0.6",
         "event-emitter": "^0.3.5",
         "immutable": "^4.0.0",
+        "isomorphic-ws": "^4.0.1",
         "safe-buffer": "^5.2.1",
-        "secure-random": "^1.1.2"
+        "secure-random": "^1.1.2",
+        "ws": "^8.13.0"
     },
     "devDependencies": {
         "@babel/cli": "^7.16.7",
