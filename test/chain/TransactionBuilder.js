@@ -93,13 +93,13 @@ describe("TransactionBuilder", () => {
                                 tr.add_signer(pKeyActive, pKeyActive.toPublicKey().toPublicKeyString());
                                 console.log("serialized transaction:", tr.serialize());
                                 tr.broadcast2(function(){
-                                   console.log('broadcast2 fun: ');  
+                                   console.log('broadcast2');  
                                 }).then(res => {
                                    console.log('broadcast2 res: '+ JSON.stringify(res));
                                    resolve(res)
                                 }).catch(error => {
-                                    console.log('broadcast2 error: '+ JSON.stringify(error));
-                                    reject(error);
+                                    console.log('broadcast2 error: '+ error);
+                                    reject(error)
                                 })
                              })
                          })
